@@ -1,7 +1,7 @@
-# EdgeAI-RTP (Zynq + EdgeTPU + YOLOv8) — README
+# EdgeAI-RTP (Zynq + EdgeTPU + Object Detection) — README
 
 > **프로젝트 요약**  
-> Zynq-7000(Zybo) 보드에서 **Google Coral USB EdgeTPU**로 YOLOv8 추론을 수행하고,  
+> Zynq-7000(Zybo) 보드에서 **Google Coral USB EdgeTPU**로 객체탐지 네트워크의 추론을 수행하고,  
 > **GStreamer**로 카메라 영상을 **RTP(JPEG)** 로 PC에 스트리밍하며,  
 > **UDP(JSON)** 으로 **BBOX 메타데이터(CXYWH, center-based)** 를 전송해 PC에서 **오버레이**로 시각화하는 시스템입니다.  
 > 짐벌 제어(서보 PWM), IMU(자세 안정화), 발사 제어(안전 게이팅)까지 포함한 **실시간 임베디드 비전 파이프라인**입니다.
@@ -31,7 +31,7 @@
 
 ## 2) 주요 특징
 
-- **온보드 NPU 추론**: EdgeTPU로 YOLOv8n EdgeTPU 모델 실시간 추론
+- **온보드 NPU 추론**: EdgeTPU로 Object detection EdgeTPU 모델 실시간 추론
 - **경량 스트리밍**: 영상은 RTP(JPEG)로, 메타는 UDP(JSON)로 분리 전송(낮은 오버헤드)
 - **좌표 체계 일관화**: **CXYWH(center, width, height)** 전송, 수신단에서 해상도 스케일링
 - **후처리 품질 향상**: OpenCV **`cv::dnn::NMSBoxes`** 기반 NMS 적용
@@ -191,7 +191,7 @@ python apps/overlay_receiver_cv.py --sdp stream.sdp --meta-port 5000 --model-inp
 
 ---
 
-## 8) 모델 준비 (YOLOv8 → TFLite → EdgeTPU)
+## 8) 모델 준비 (ex) YOLOv8 → TFLite → EdgeTPU)
 
 1) **YOLO 학습(커스텀 데이터)**
 2) **TFLite 변환** (정수 양자화)
